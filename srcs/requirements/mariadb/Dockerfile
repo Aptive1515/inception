@@ -1,4 +1,3 @@
-
 # Use Alpine Linux as the base image
 FROM alpine:3.16
 
@@ -18,7 +17,7 @@ RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
 EXPOSE 3306
 
-COPY ./create_db.sh .
+COPY ./tools/create_db.sh .
 
 
 COPY ./tools/entrypoint.sh /entrypoint.sh
