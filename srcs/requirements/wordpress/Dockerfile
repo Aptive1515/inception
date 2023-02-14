@@ -39,7 +39,7 @@ RUN wget https://wordpress.org/latest.zip && \
     rm -rf wordpress latest.zip
 
 # Le script wp-config-create.sh sera copié pour configurer la base de données pour WordPress.
-COPY ./wp-config-create.sh .
+COPY ./tools/wp-config-create.sh .
 
 EXPOSE 9000
 # RUN sh wp-config-create.sh && rm wp-config-create.sh && \
@@ -47,7 +47,7 @@ EXPOSE 9000
 # rm wp-config-create.sh &&
 # RUN rm ./wp-config-sample.php
 
-COPY entrypoint.sh /entrypoint.sh
+COPY ./tools/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
