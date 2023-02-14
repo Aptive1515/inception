@@ -17,7 +17,10 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php8-zip \
     php8-redis \
     wget \
-    unzip
+    unzip \
+    curl \
+    openssl \
+    php8-phar
 
 # La commande sed sera utilisée pour éditer les paramètres de configuration de PHP-FPM pour écouter sur le port 9000.
 RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" \
@@ -38,8 +41,14 @@ RUN wget https://wordpress.org/latest.zip && \
     cp -rf wordpress/* . && \
     rm -rf wordpress latest.zip
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+
+
 # Le script wp-config-create.sh sera copié pour configurer la base de données pour WordPress.
 COPY ./tools/wp-config-create.sh .
+
+COPY ./tools/config-wp-install.sh .
 
 EXPOSE 9000
 # RUN sh wp-config-create.sh && rm wp-config-create.sh && \

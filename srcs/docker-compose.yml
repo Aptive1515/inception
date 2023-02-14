@@ -27,8 +27,8 @@ services:
     #     DB_ROOT: ${DB_ROOT}
     env_file:
       - .env
-    # volumes:
-    #   - db-data:/var/lib/mysql
+    volumes:
+      - db-data:/var/lib/mysql
     hostname : mariadb
 
 
@@ -44,8 +44,8 @@ services:
       - .env
     networks:
       - mynetwork
-    # volumes:
-    #   - wordpress-data:/var/www/html
+    volumes:
+      - wordpress-data:/var/www
     depends_on:
       - mariadb
     hostname : wordpress
@@ -62,12 +62,12 @@ volumes:
       driver_opts:
         o: bind
         type: none
-        device: /home/aptive/42/inception/srcs/volumes
+        device: /home/${USER}/42/inception/srcs/volumes/maria_db
   wordpress-data:
       driver: local
       driver_opts:
         o: bind
         type: none
-        device: /home/aptive/42/inception/srcs/volumes
+        device: /home/${USER}/42/inception/srcs/volumes/wordpress
 
 

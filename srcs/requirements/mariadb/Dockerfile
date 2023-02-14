@@ -19,8 +19,11 @@ RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
 EXPOSE 3306
 
 COPY ./create_db.sh .
-RUN sh create_db.sh && rm create_db.sh
+# RUN sh create_db.sh && rm create_db.sh
+
+
+# CMD ["/usr/bin/mysqld", "--skip-log-error", "--port=3306"]
+COPY ./tools/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 USER mysql
-
-
-CMD ["/usr/bin/mysqld", "--skip-log-error", "--port=3306"]
+ENTRYPOINT [ "/entrypoint.sh" ]
