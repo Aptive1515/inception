@@ -1,7 +1,12 @@
-all :
+first:
 	mkdir /home/${USER}/42/inception/srcs/volumes
 	mkdir /home/${USER}/42/inception/srcs/volumes/maria_db
 	mkdir /home/${USER}/42/inception/srcs/volumes/wordpress
+	@docker compose -f ./srcs/docker-compose.yml up -d --build
+	@docker compose -f ./srcs/docker-compose.yml down
+	@docker compose -f ./srcs/docker-compose.yml up -d --build
+
+all :
 	@docker compose -f ./srcs/docker-compose.yml up -d
 
 stop :
