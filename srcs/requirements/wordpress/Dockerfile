@@ -51,23 +51,7 @@ COPY ./tools/wp-config-create.sh .
 COPY ./tools/config-wp-install.sh .
 
 EXPOSE 9000
-# RUN sh wp-config-create.sh && rm wp-config-create.sh && \
-#     chmod -R 0777 wp-content/
-# rm wp-config-create.sh &&
-# RUN rm ./wp-config-sample.php
 
 COPY ./tools/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
-
-
-# CMD ["/usr/sbin/php-fpm8", "-F"]
-
-
-
-
-
-
-
-
-
