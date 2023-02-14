@@ -1,18 +1,20 @@
 # utiliser l'image Alpine
-FROM alpine:latest
+FROM alpine:3.16
 
+
+RUN apk update && apk upgrade
 # installer Nginx
 RUN apk add --update nginx
 
 # copier les certification SSL
-COPY cert.pem /etc/nginx/cert.pem
-COPY key.pem /etc/nginx/key.pem
+COPY ./tools/cert.pem /etc/nginx/cert.pem
+COPY ./tools/key.pem /etc/nginx/key.pem
 
 # copier la configuration de Nginx
-COPY default.conf /etc/nginx/nginx.conf
+COPY ./tools/nginx.conf /etc/nginx/nginx.conf
 
 # copier le fichier index.html
-COPY index.html /usr/share/nginx/html/index.html
+# COPY ./tools/index.html /usr/share/nginx/html/index.html
 
 # exposer le port 80 pour Nginx
 EXPOSE 443

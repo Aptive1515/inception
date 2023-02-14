@@ -1,0 +1,73 @@
+version: '3'
+services:
+  nginx_server:
+    build: ./requirements/nginx
+    ports:
+      - 443:443
+    links:
+      - wordpress:wordpress
+    depends_on:
+      - wordpress
+    restart : always
+    networks:
+      - mynetwork
+    hostname : nginx
+
+
+  mariadb:
+    build : ./requirements/mariadb
+    ports:
+      - 3306:3306
+    networks:
+      - mynetwork
+    # environment:
+    #     DB_NAME: ${DB_NAME}
+    #     DB_USER: ${DB_USER}
+    #     DB_PASS: ${DB_PASS}
+    #     DB_ROOT: ${DB_ROOT}
+    env_file:
+      - .env
+    # volumes:
+    #   - db-data:/var/lib/mysql
+    hostname : mariadb
+
+
+  wordpress:
+    build : ./requirements/wordpress
+    ports:
+      - 9000:9000
+    # environment:
+    #     DB_NAME: ${DB_NAME}
+    #     DB_USER: ${DB_USER}
+    #     DB_PASS: ${DB_PASS}
+    env_file:
+      - .env
+    networks:
+      - mynetwork
+    # volumes:
+    #   - wordpress-data:/var/www/html
+    depends_on:
+      - mariadb
+    hostname : wordpress
+
+
+
+networks:
+  mynetwork:
+
+
+volumes:
+  db-data:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /home/aptive/42/inception/srcs/volumes
+  wordpress-data:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /home/aptive/42/inception/srcs/volumes
+
+
