@@ -24,6 +24,7 @@ services:
       - .env
     volumes:
       - db-data:/var/lib/mysql
+    restart : always
     hostname : mariadb
 
 
@@ -53,12 +54,12 @@ volumes:
       driver_opts:
         o: bind
         type: none
-        device: /home/${USER}/volumes/maria_db
+        device: /home/${USER}/data/maria_db
   wordpress-data:
       driver: local
       driver_opts:
         o: bind
         type: none
-        device: /home/${USER}/volumes/wordpress
+        device: /home/${USER}/data/wordpress
 
 

@@ -1,21 +1,21 @@
 install :
-	@if [ ! -d /home/${USER}/volumes ]; then \
+	@if [ ! -d /home/${USER}/data ]; then \
 		echo "Creation du dossier volumes ! OK ";\
-		mkdir /home/${USER}/volumes;\
+		mkdir /home/${USER}/data;\
 	fi
-	@if [ ! -d /home/${USER}/volumes/maria_db ]; then \
+	@if [ ! -d /home/${USER}/data/maria_db ]; then \
 		echo "Creation du dossier maria_db ! OK ";\
-		mkdir /home/${USER}/volumes/maria_db;\
+		mkdir /home/${USER}/data/maria_db;\
 	fi
-	@if [ ! -d /home/${USER}/volumes/wordpress ]; then\
+	@if [ ! -d /home/${USER}/data/wordpress ]; then\
 		echo "Creation du dossier wordpress ! OK ";\
-		mkdir /home/${USER}/volumes/wordpress;\
+		mkdir /home/${USER}/data/wordpress;\
 	fi
 	@docker compose -f ./srcs/docker-compose.yml up -d --build
 	@docker compose -f ./srcs/docker-compose.yml down
 	@docker compose -f ./srcs/docker-compose.yml up -d --build
 
-all :
+up :
 	@docker compose -f ./srcs/docker-compose.yml up -d
 
 stop :
@@ -27,9 +27,8 @@ down :
 rm :
 	@docker compose -f ./srcs/docker-compose.yml down
 	@docker volume rm srcs_db-data srcs_wordpress-data
-	@docker rmi -f srcs_wordpress srcs_mariadb srcs_nginx_server
-	@docker compose -f ./srcs/docker-compose.yml up -d --build
-	@sudo rm -rf /home/${USER}/volumes
+	@docker rmi -f srcs-wordpress srcs-mariadb srcs-nginx_server
+	@sudo rm -rf /home/${USER}/data
 
 execWP :
 	@docker exec -ti srcs-wordpress-1 /bin/sh
