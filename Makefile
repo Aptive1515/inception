@@ -1,18 +1,15 @@
 install :
-	@if [ ! -d mkdir /home/${USER}/volumes ] \
-	then \
-		echo "Creation du dossier volumes ! OK "; \
-		mkdir /home/${USER}/volumes; \
+	@if [ ! -d /home/${USER}/volumes ]; then \
+		echo "Creation du dossier volumes ! OK ";\
+		mkdir /home/${USER}/volumes;\
 	fi
-	@if [ ! -d mkdir /home/${USER}/volumes/maria_db ] \
-	then \
-		echo "Creation du dossier maria_db ! OK "; \
-		mkdir /home/${USER}/volumes/maria_db; \
+	@if [ ! -d /home/${USER}/volumes/maria_db ]; then \
+		echo "Creation du dossier maria_db ! OK ";\
+		mkdir /home/${USER}/volumes/maria_db;\
 	fi
-	@if [ ! -d mkdir /home/${USER}/volumes/wordpress ] \
-	then \
-		echo "Creation du dossier wordpress ! OK "; \
-		mkdir /home/${USER}/volumes/wordpress; \
+	@if [ ! -d /home/${USER}/volumes/wordpress ]; then\
+		echo "Creation du dossier wordpress ! OK ";\
+		mkdir /home/${USER}/volumes/wordpress;\
 	fi
 	@docker compose -f ./srcs/docker-compose.yml up -d --build
 	@docker compose -f ./srcs/docker-compose.yml down
@@ -36,5 +33,6 @@ rm :
 
 execWP :
 	@docker exec -ti srcs-wordpress-1 /bin/sh
+	
 execDB:
 	@docker exec -ti srcs-mariadb-1 /bin/sh
